@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Error | Library Management</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body class="error-page">
+
+<div class="error-card">
+
+    <div class="error-symbol">!</div>
+
+    <p class="eyebrow">APPLICATION MESSAGE</p>
+
+    <h1>Unable to complete the request</h1>
+
+    <p
+        class="error-message"
+        th:text="${errorMessage}">
+        Something went wrong while processing your request.
+    </p>
+
+    <a class="primary-btn" th:href="@{/books}">
+        Return to Book Catalogue
+    </a>
+
+</div>
+
+</body>
+
+</html>

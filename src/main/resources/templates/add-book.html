@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Book | Library Management</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-mark">L</div>
+
+            <div>
+                <h2>LibraryDesk</h2>
+                <span>Book Management</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link" th:href="@{/books}">
+                Book Catalogue
+            </a>
+
+            <a class="nav-link active" th:href="@{/books/add}">
+                Add New Book
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <p>Library Management System</p>
+
+            <span>Spring Boot & MySQL</span>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="eyebrow">BOOK MANAGEMENT</p>
+
+                <h1>Add New Book</h1>
+
+                <p class="page-description">
+                    Enter the book information below to add it to the library catalogue.
+                </p>
+
+            </div>
+
+
+            <a class="secondary-btn" th:href="@{/books}">
+                Back to Catalogue
+            </a>
+
+        </header>
+
+
+        <section class="form-card">
+
+            <div class="form-heading">
+
+                <h3>Book Information</h3>
+
+                <p>
+                    Fields marked with an asterisk are required.
+                </p>
+
+            </div>
+
+
+            <form
+                th:action="@{/books/save}"
+                th:object="${book}"
+                method="post">
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full-width">
+
+                        <label for="title">
+                            Book Title <span>*</span>
+                        </label>
+
+                        <input
+                            id="title"
+                            type="text"
+                            th:field="*{title}"
+                            placeholder="Enter book title">
+
+                        <small
+                            class="field-error"
+                            th:if="${#fields.hasErrors('title')}"
+                            th:errors="*{title}">
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label for="author">
+                            Author <span>*</span>
+                        </label>
+
+                        <input
+                            id="author"
+                            type="text"
+                            th:field="*{author}"
+                            placeholder="Enter author name">
+
+                        <small
+                            class="field-error"
+                            th:if="${#fields.hasErrors('author')}"
+                            th:errors="*{author}">
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <input
+                            id="category"
+                            type="text"
+                            th:field="*{category}"
+                            placeholder="e.g. Fiction">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="isbn">
+                            ISBN
+                        </label>
+
+                        <input
+                            id="isbn"
+                            type="text"
+                            th:field="*{isbn}"
+                            placeholder="e.g. 9781234567890">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="publicationYear">
+                            Publication Year
+                        </label>
+
+                        <input
+                            id="publicationYear"
+                            type="number"
+                            th:field="*{publicationYear}"
+                            placeholder="e.g. 2024">
+
+                        <small
+                            class="field-error"
+                            th:if="${#fields.hasErrors('publicationYear')}"
+                            th:errors="*{publicationYear}">
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Status <span>*</span>
+                        </label>
+
+                        <select
+                            id="status"
+                            th:field="*{status}">
+
+                            <option value="">
+                                Select book status
+                            </option>
+
+                            <option value="Available">
+                                Available
+                            </option>
+
+                            <option value="Borrowed">
+                                Borrowed
+                            </option>
+
+                        </select>
+
+                        <small
+                            class="field-error"
+                            th:if="${#fields.hasErrors('status')}"
+                            th:errors="*{status}">
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <a
+                        class="secondary-btn"
+                        th:href="@{/books}">
+                        Cancel
+                    </a>
+
+                    <button
+                        class="primary-btn"
+                        type="submit">
+                        Save Book
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

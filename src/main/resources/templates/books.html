@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Catalogue | Library Management</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">L</div>
+
+            <div>
+                <h2>LibraryDesk</h2>
+                <span>Book Management</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a class="nav-link active" th:href="@{/books}">
+                Book Catalogue
+            </a>
+
+            <a class="nav-link" th:href="@{/books/add}">
+                Add New Book
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Library Management System</p>
+            <span>Spring Boot & MySQL</span>
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">LIBRARY ADMINISTRATION</p>
+                <h1>Book Catalogue</h1>
+                <p class="page-description">
+                    View, search and maintain all books stored in the library database.
+                </p>
+            </div>
+
+            <a class="primary-btn" th:href="@{/books/add}">
+                + Add Book
+            </a>
+
+        </header>
+
+
+        <section class="content-card">
+
+            <div class="card-toolbar">
+
+                <div>
+
+                    <h3>All Books</h3>
+
+                    <p>
+                        Search the catalogue by book title.
+                    </p>
+
+                </div>
+
+
+                <form
+                    class="search-box"
+                    th:action="@{/books/search}"
+                    method="get">
+
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Search by title"
+                        autocomplete="off">
+
+                    <button type="submit" class="secondary-btn">
+                        Search
+                    </button>
+
+                    <a class="text-btn" th:href="@{/books}">
+                        Clear
+                    </a>
+
+                </form>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Book</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>ISBN</th>
+                        <th>Year</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:if="${#lists.isEmpty(books)}">
+
+                        <td colspan="8">
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">📚</div>
+
+                                <h3>No books available</h3>
+
+                                <p>
+                                    The catalogue is currently empty.
+                                    Add your first book to begin managing the collection.
+                                </p>
+
+                                <a class="primary-btn" th:href="@{/books/add}">
+                                    Add First Book
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr th:each="book : ${books}">
+
+                        <td>
+                            <span
+                                class="id-badge"
+                                th:text="${book.bookId}">
+                            </span>
+                        </td>
+
+
+                        <td>
+
+                            <div class="book-title">
+
+                                <strong th:text="${book.title}">
+                                    Book Title
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+
+                        <td th:text="${book.author}">
+                            Author
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="category-badge"
+                                th:text="${book.category != null && !book.category.isEmpty() ? book.category : 'Uncategorised'}">
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="isbn-text"
+                                th:text="${book.isbn != null && !book.isbn.isEmpty() ? book.isbn : '—'}">
+                            </span>
+
+                        </td>
+
+
+                        <td th:text="${book.publicationYear != null ? book.publicationYear : '—'}">
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="status-badge"
+                                th:classappend="${book.status == 'Available'} ? ' status-available' : ' status-borrowed'"
+                                th:text="${book.status}">
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                <a
+                                    class="action-btn edit-action"
+                                    th:href="@{/books/edit/{id}(id=${book.bookId})}">
+                                    Edit
+                                </a>
+
+
+                                <a
+                                    class="action-btn delete-action"
+                                    th:href="@{/books/delete/{id}(id=${book.bookId})}"
+                                    onclick="return confirm('Are you sure you want to delete this book?');">
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
